@@ -1,0 +1,107 @@
+{"0": {
+    "doc": "Home",
+    "title": "Home",
+    "content": "Lumos RL Workspace is a modular reinforcement learning framework for legged locomotion, designed around the Lus and NIX humanoid robots. Built on Isaac Lab, it decouples policy development from specific simulators, supporting seamless integration with both Isaac Sim and MuJoCo. Key features include: . | Modularity &amp; Flexibility – controllers are isolated from the simulator core, enabling easy extension and platform switching. | Imitation-based Learning – with motion references and adaptive curricula, policies can capture natural, human-like movements. | General Interfaces – velocity and style commands, reward terms, and robot-specific modules simplify adaptation to new robots. | Evaluation &amp; Benchmarking – standardized tests across terrains, tasks, and styles enable robustness, generalization, and sim-to-real studies. In short, Lumos RL Workspace is a simulation-agnostic, extensible platform for advancing locomotion policy research and deployment. Using this guide, you will be able to retarget human motions, train locomotion policies, and deploy them to the Lus2 and Nix1 humanoid robots. | . ",
+    "url": "/",
+    
+    "relUrl": "/"
+  },"1": {
+    "doc": "Models",
+    "title": "Robots",
+    "content": "This chapter introduces the robot platforms currently supported in Lumos RL Workspace.Lumos RL Workspace currently supports two humanoid robots: Lus2 and Nix1. Both robots are described using modular configuration files and URDF/XML models, including detailed kinematics, joint limits, actuator properties, and mass distributions to ensure smooth simulation and accurate sim-to-real transfer. These resources are stored under the robot_models/ directory. | Currently available models . | Lus2: Full-sized humanoid robot | NIX1: Small-sized humanoid robot Both robots are modeled with high-fidelity physics, including joint limits, actuator properties, and accurate mass distribution. This ensures realistic training dynamics and smoother transfer to real hardware. | . | . ",
+    "url": "/contents/models.html#robots",
+    
+    "relUrl": "/contents/models.html#robots"
+  },"2": {
+    "doc": "Models",
+    "title": "Device details",
+    "content": "Lus2 . | Height: 1.6 m | Weight: 57 kg | Degrees of Freedom (DoF): 28 | Actuators: Position–torque actuators with compliant control | . Nix1 . | Height: 0.886m | Weight: 18 kg | Degrees of Freedom (DoF): 21 | Actuators: Hybrid position–torque actuators with higher torque limits | . ",
+    "url": "/contents/models.html#device-details",
+    
+    "relUrl": "/contents/models.html#device-details"
+  },"3": {
+    "doc": "Models",
+    "title": "Models",
+    "content": " ",
+    "url": "/contents/models.html",
+    
+    "relUrl": "/contents/models.html"
+  },"4": {
+    "doc": "Overview",
+    "title": "Overview",
+    "content": "This chapter provides an overview of the two core projects in Lumos RL Workspace.Before diving into the details, the following diagram illustrates the relationship between the main components and their interactions: . Each project has its own subpage with two parts: . | Getting Started – Step-by-step guide for running demos and training policies. | Concepts &amp; Principles – Technical details, mathematical background, and design philosophy. Additional documentation will be added here progressively. | . ",
+    "url": "/contents/overview.html",
+    
+    "relUrl": "/contents/overview.html"
+  },"5": {
+    "doc": "Quickly Start",
+    "title": "Installation",
+    "content": " ",
+    "url": "/contents/quilk_start.html#installation",
+    
+    "relUrl": "/contents/quilk_start.html#installation"
+  },"6": {
+    "doc": "Quickly Start",
+    "title": "Prerequisites",
+    "content": "Make sure your system meets the following requirements: . | OS: Ubuntu 20.04 / 22.04 | Python: 3.10 | CUDA: 12.8 | Isaac Sim: 4.5.0 | Isaac Lab: 2.1.0 | . ",
+    "url": "/contents/quilk_start.html#prerequisites",
+    
+    "relUrl": "/contents/quilk_start.html#prerequisites"
+  },"7": {
+    "doc": "Quickly Start",
+    "title": "Step 1. Repository Setup",
+    "content": "mkdir -p ~/workspace/lumos_ws cd ~/workspace git clone https://github.com/isaac-sim/IsaacLab.git . Clone additional repositories: . cd ~/workspace/lumos_ws git clone https://github.com/LumosRobot/st_gym.git git clone https://github.com/LumosRobot/st_rl.git git clone https://github.com/LumosRobot/robot_models.git git clone https://github.com/LumosRobot/humanoid_demo_retarget.git cd st_gym/third_party git clone https://github.com/sunzhon/refmotion_manager.git . Project structure . workspace ├── IsaacLab └── lumos_ws ├── humanoid_demo_retarget ├── installation ├── robot_models ├── st_gym │ ├── exts/legged_robots │ └── third_party/refmotion_manager └── st_rl . ",
+    "url": "/contents/quilk_start.html#step-1-repository-setup",
+    
+    "relUrl": "/contents/quilk_start.html#step-1-repository-setup"
+  },"8": {
+    "doc": "Quickly Start",
+    "title": "Step 2. Environment Setup",
+    "content": ". | Create and activate conda environment: | . conda create -n lumos_env python=3.10 conda activate lumos_env . | Install PyTorch (CUDA build): | . pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cu118 . | Update pip and install Isaac Lab: | . pip install --upgrade pip pip install isaaclab[isaacsim,all]==2.1.0 --extra-index-url https://pypi.nvidia.com . | Verify Isaac Sim: | . isaacsim . | Install project dependencies: | . # legged_robots cd ~/workspace/lumos_ws/st_gym/exts/legged_robots pip install -e . # st_rl cd ~/workspace/lumos_ws/st_rl pip install -e . # refmotion_manager cd ~/workspace/lumos_ws/st_gym/third_party/refmotion_manager pip install -e . | System tools: | . sudo apt-get update sudo apt install cmake build-essential . | Install IsaacLab script: | . cd ~/workspace/IsaacLab git checkout 2.1.0 ./isaaclab.sh -i . | Install rsl_rl: | . pip install rsl-rl-lib # or git clone https://github.com/leggedrobotics/rsl_rl cd rsl_rl pip install -e . ",
+    "url": "/contents/quilk_start.html#step-2-environment-setup",
+    
+    "relUrl": "/contents/quilk_start.html#step-2-environment-setup"
+  },"9": {
+    "doc": "Quickly Start",
+    "title": "Step 3. Robot Resources",
+    "content": ". | Convert URDF → USD: | . python ~/workspace/IsaacLab/scripts/tools/convert_urdf.py \\ ~/workspace/lumos_ws/robot_models/lus2/urdf/lus2_joint21.urdf \\ ~/workspace/lumos_ws/robot_models/lus2/usd/lus2_joint21.usd \\ --merge-joints --joint-stiffness 10000 --joint-damping 0.0 --rendering_mode quality . ",
+    "url": "/contents/quilk_start.html#step-3-robot-resources",
+    
+    "relUrl": "/contents/quilk_start.html#step-3-robot-resources"
+  },"10": {
+    "doc": "Quickly Start",
+    "title": "Running",
+    "content": " ",
+    "url": "/contents/quilk_start.html#running",
+    
+    "relUrl": "/contents/quilk_start.html#running"
+  },"11": {
+    "doc": "Quickly Start",
+    "title": "Training",
+    "content": "Flat terrain: . cd ~/workspace/lumos_ws/st_gym python scripts/st_rl/train.py --task Flat-Lus2 --headless . Rough terrain: . cd ~/workspace/lumos_ws/st_gym python scripts/st_rl/train.py --task Rough-Lus2 --headless . Or use run.sh: ./run.sh -m train . Logs are saved to: . st_gym/logs/st_rl/lus2_flat/yyyy-mm-dd_hh-mm-ss . Run Script (run.sh) Options . | Option | Description | . | -n | Specify the task name (default: Flat-Lus2) | . | -m | Set run mode to training (train), playback (play) or simulation only (sim2mujoco) | . | -l | Load a previous run (implies --load_run xxx --resume=True) | . | -h | Nohup output file to extract from (default nohup.out) | . | -c | Load a specific checkpoint by index | . | -d | Use specific device (example: --device cuda:0) | . | -r | Export the trained model to RKNN format (--export_rknn) | . | -e | Specify the experiment name (default: flat-Lus2) | . ",
+    "url": "/contents/quilk_start.html#training",
+    
+    "relUrl": "/contents/quilk_start.html#training"
+  },"12": {
+    "doc": "Quickly Start",
+    "title": "Play",
+    "content": "Run trained policy in Isaac Lab: . python scripts/st_rl/play.py --task Flat-Lus2 \\ --load_run 2025-06-05_15-16-48 --checkpoint model_400.pt . Or: ./run.sh -n Flat-Lus2 -m play -l 2025-06-05_15-16-48 -c model_400.pt . Exported ONNX policy: . st_gym/logs/st_rl/lus2_flat/yyyy-mm-dd_hh-mm-ss/exported/policy.onnx . ",
+    "url": "/contents/quilk_start.html#play",
+    
+    "relUrl": "/contents/quilk_start.html#play"
+  },"13": {
+    "doc": "Quickly Start",
+    "title": "Sim2Sim (MuJoCo)",
+    "content": "Replay with MuJoCo using python: . python scripts/st_rl/sim2mujoco.py --task Flat-Lus2-Play \\ --experiment_name lus2_flat --load_run 2025-07-27_15-13-37 . or by bash script: ./run.sh -n Flat-Lus2 -m sim -l 2025-07-27_15-13-37 . ",
+    "url": "/contents/quilk_start.html#sim2sim-mujoco",
+    
+    "relUrl": "/contents/quilk_start.html#sim2sim-mujoco"
+  },"14": {
+    "doc": "Quickly Start",
+    "title": "Quickly Start",
+    "content": " ",
+    "url": "/contents/quilk_start.html",
+    
+    "relUrl": "/contents/quilk_start.html"
+  }
+}
