@@ -41,7 +41,7 @@ sudo apt install cmake build-essential
 #source ~/miniconda3/bin/activate && conda activate env_isaaclab
 
 echo "9) Install Isaaclab  ..."
-cd IsaacLab && git checkout 2.0.2 && ./isaaclab.sh -i
+cd IsaacLab && git checkout 2.1.0 && ./isaaclab.sh -i
 
 
 #3) install other rl framework, such as st_rl, rsl_rl, skrl, 
