@@ -1,6 +1,6 @@
-[submodule "robot_models"]
-	path = robot_models
-	url = https://github.com/LumosRobot/robot_models.git
+[submodule "lumos_assets"]
+	path = lumos_assets
+	url = https://github.com/LumosRobot/lumos_assets.git
 [submodule "st_rl"]
 	path = st_rl
 	url = https://github.com/LumosRobot/st_rl.git
