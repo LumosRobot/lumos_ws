@@ -34,12 +34,12 @@ jobs:
         with:
           submodules: 'recursive'
           
-      - name: Clean and reinitialize submodules
+      - name: Fix submodules
         run: |
-          # 清理旧的子模块引用
-          git submodule deinit -f robot_models || true
-          git rm -f robot_models || true
-          # 重新初始化子模块
+          # 完全清理子模块配置
+          git submodule deinit -f . || true
+          rm -rf .git/modules || true
+          # 重新初始化
           git submodule update --init --recursive --force
           
       - name: Setup Ruby
