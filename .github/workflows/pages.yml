@@ -31,6 +31,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          submodules: 'recursive'
+          
+      - name: Clean and reinitialize submodules
+        run: |
+          # 清理旧的子模块引用
+          git submodule deinit -f robot_models || true
+          git rm -f robot_models || true
+          # 重新初始化子模块
+          git submodule update --init --recursive --force
+          
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
